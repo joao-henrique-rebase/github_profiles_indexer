@@ -1,0 +1,24 @@
+<%= form_with model: profile, local: true do |f| %>
+  <% if profile.errors.any? %>
+    <div>
+      <h2>Erros:</h2>
+      <ul>
+        <% profile.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "Nome" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :github_url, "URL do Github" %>
+    <%= f.text_field :github_url %>
+  </div>
+
+  <%= f.submit "Salvar", class: "btn btn-primary" %>
+<% end %>

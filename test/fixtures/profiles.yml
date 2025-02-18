@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  nickname: MyString
+  followers_count: MyString
+  following_count: MyString
+  stars_count: MyString
+  contributions_count_last_year: 1
+  avatar_url: MyText
+  github_url: MyText
+  short_github_url: MyText
+  organization: MyString
+  location: MyString
+
+two:
+  name: MyString
+  nickname: MyString
+  followers_count: MyString
+  following_count: MyString
+  stars_count: MyString
+  contributions_count_last_year: 1
+  avatar_url: MyText
+  github_url: MyText
+  short_github_url: MyText
+  organization: MyString
+  location: MyString
