@@ -1,4 +1,9 @@
 class ProfilesController < ApplicationController
+
+  def show
+    set_profile
+  end
+
   def new
     @profile = Profile.new
   end
@@ -15,6 +20,10 @@ class ProfilesController < ApplicationController
   end
 
   private
+
+  def set_profile
+    @profile = Profile.find(params[:id])
+  end
 
   def profile_params
     params.require(:profile).permit(:name, :github_url)

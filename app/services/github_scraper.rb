@@ -4,13 +4,15 @@ require 'open-uri'
 class GithubScraper
   class ScraperError < StandardError; end
 
+  BASE_URL = "https://github.com".freeze
+
   SELECTORS = {
     nickname:        ".p-nickname.vcard-username",
     avatar_url:      ".avatar.avatar-user",
     followers_count: "a[href$='tab=followers'] span",
     following_count: "a[href$='tab=following'] span",
     stars_count:     "nav a[href$='tab=stars'] span.Counter",
-    contributions:   ".js-yearly-contributions",
+    contributions:   ".js-yearly-contributions h2.f4",
     organization:    ".vcard-detail span.p-org",
     location:        ".vcard-detail span.p-label"
   }.freeze
@@ -19,28 +21,30 @@ class GithubScraper
     new(profile_url).call
   end
 
-  attr_reader :profile_url, :document
+  attr_reader :username_url, :profile_document, :contributions_document
 
-  def initialize(profile_url)
-    @profile_url = profile_url
+  def initialize(username_url)
+    @username_url = username_url
   end
 
   def call
-    validate_url!
-    @document = fetch_document
+    validate!
+    @profile_document, @contributions_document = fetch_documents
     build_result
   end
 
   private
 
-  def validate_url!
-    raise ScraperError, "Empty URL" if profile_url.blank?
+  def validate!
+    raise ScraperError, "Empty URL" if username_url.blank?
   end
 
-  def fetch_document
-    Nokogiri::HTML(URI.open(profile_url))
-  rescue StandardError => e
-    raise ScraperError, "Failed to open URL: #{e.message}"
+  def fetch_documents
+    [url_profile(username_url), url_contributions(username_url)].map do |url|
+      Nokogiri::HTML(URI.open(url))
+    rescue StandardError => e
+      raise ScraperError, "Failed to open URL: #{e.message}"
+    end
   end
 
   def build_result
@@ -50,17 +54,29 @@ class GithubScraper
       followers_count: extract_text(SELECTORS[:followers_count]),
       following_count: extract_text(SELECTORS[:following_count]),
       stars_count:     extract_text(SELECTORS[:stars_count]),
-      contributions:   extract_text(SELECTORS[:contributions])&.gsub(/\D/, '')&.to_i,
+      contributions:   extract_text_contributions(SELECTORS[:contributions]),
       organization:    extract_text(SELECTORS[:organization]),
       location:        extract_text(SELECTORS[:location])
     }
   end
 
   def extract_text(selector)
-    document.at_css(selector)&.text&.strip
+    profile_document.at_css(selector)&.text&.strip
+  end
+
+  def extract_text_contributions(selector)
+    contributions_document.at_css(selector)&.text&.strip&.gsub(/\D/, '')&.to_i
   end
 
   def extract_img(selector)
-    document.at_css(selector)&.[]('src')&.strip
+    profile_document.at_css(selector)&.[]('src')&.strip
+  end
+
+  def url_profile(username_url)
+    "#{BASE_URL}/#{username_url}"
+  end
+
+  def url_contributions(username_url)
+    "#{BASE_URL}/users/#{username_url}/contributions"
   end
 end
