@@ -21,10 +21,10 @@ class GithubScraper
     new(profile_url).call
   end
 
-  attr_reader :username_url, :profile_document, :contributions_document
+  attr_reader :profile_url, :profile_document, :contributions_document
 
-  def initialize(username_url)
-    @username_url = username_url
+  def initialize(profile_url)
+    @profile_url = profile_url
   end
 
   def call
@@ -36,11 +36,11 @@ class GithubScraper
   private
 
   def validate!
-    raise ScraperError, "Empty URL" if username_url.blank?
+    raise ScraperError, "Empty URL" if profile_url.blank?
   end
 
   def fetch_documents
-    [url_profile(username_url), url_contributions(username_url)].map do |url|
+    [profile_url, contributions_url(profile_url)].map do |url|
       Nokogiri::HTML(URI.open(url))
     rescue StandardError => e
       raise ScraperError, "Failed to open URL: #{e.message}"
@@ -72,11 +72,8 @@ class GithubScraper
     profile_document.at_css(selector)&.[]('src')&.strip
   end
 
-  def url_profile(username_url)
-    "#{BASE_URL}/#{username_url}"
-  end
-
-  def url_contributions(username_url)
+  def contributions_url(profile_url)
+    username_url = profile_url.gsub(%r{https?://(www\.)?github\.com/}, '').split('/').first
     "#{BASE_URL}/users/#{username_url}/contributions"
   end
 end

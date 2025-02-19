@@ -1,11 +1,11 @@
-<%= form_with(model: @profile, url: profiles_path, local: true, class: "mt-4") do |f| %>
+<%= form_with(model: @profile, url: profiles_path, local: true) do |f| %>
   <div class="mb-3">
-    <%= f.label :name, class: "form-label" %>
+    <%= f.label :name, "Nome", class: "form-label" %>
     <%= f.text_field :name, class: "form-control bg-secondary text-white border-0" %>
   </div>
 
   <div class="mb-3">
-    <%= f.label :github_url, "URL do GitHub", class: "form-label" %>
+    <%= f.label :github_url, "URL perfil do GitHub", class: "form-label" %>
     <%= f.text_field :github_url, class: "form-control bg-secondary text-white border-0" %>
   </div>
 

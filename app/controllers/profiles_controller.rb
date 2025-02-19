@@ -1,7 +1,11 @@
 class ProfilesController < ApplicationController
+  before_action :set_profile, only: [:show, :destroy]
+
+  def index
+    @profiles = Profile.all
+  end
 
   def show
-    set_profile
   end
 
   def new
@@ -17,6 +21,11 @@ class ProfilesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @profile.destroy
+    redirect_to profiles_path, notice: "Perfil removido com sucesso."
   end
 
   private
