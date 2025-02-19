@@ -29,6 +29,12 @@
   <body class="bg-light text-dark d-flex flex-column min-vh-100">
     <%= render "shared/header" %>
     <main class="container mt-4 flex-grow-1">
+      <% if flash[:notice] %>
+        <div class="alert alert-success"><%= flash[:notice] %></div>
+      <% elsif flash[:alert] %>
+        <div class="alert alert-danger"><%= flash[:alert] %></div>
+      <% end %>
+
       <%= yield %>
     </main>
     <%= render "shared/footer" %>

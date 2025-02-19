@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :destroy, :rescan]
+  before_action :set_profile, only: [:edit, :update, :show, :destroy, :rescan]
 
   def index
     @profiles = if params[:query].blank?
@@ -23,17 +23,6 @@ class ProfilesController < ApplicationController
     @profile = Profile.new(profile_params)
 
     if @profile.save
-      update_data_from_github(@profile)
-      redirect_to @profile, notice: "Perfil criado com sucesso."
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  def create
-    @profile = Profile.new(profile_params)
-
-    if @profile.save
       result = update_data_from_github(@profile)
 
       if result[:status] == :success
@@ -44,6 +33,23 @@ class ProfilesController < ApplicationController
       end
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @profile.update(profile_params)
+      result = update_data_from_github(@profile)
+
+      if result[:status] == :success
+        redirect_to @profile, notice: "Perfil atualizado com sucesso."
+      else
+        redirect_to edit_profile_path(@profile), alert: result[:message]
+      end
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
