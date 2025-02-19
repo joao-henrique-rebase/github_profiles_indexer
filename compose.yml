@@ -1,12 +1,11 @@
 services:
   app:
-    image: ruby:3.4.1
+    build: .
     tty: true
     stdin_open: true
     container_name: github_profiles_indexer_app
     depends_on:
       - postgres
-    entrypoint: ["sh", "./entrypoint.sh"]
     env_file: .env
     working_dir: /app
     volumes:
@@ -31,6 +30,7 @@ services:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
+
 volumes:
   rubygems:
   pgdata:

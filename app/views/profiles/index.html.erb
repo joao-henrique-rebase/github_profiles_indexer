@@ -1,37 +1,13 @@
-<div class="container">
+<div class="container" data-controller="search">
   <h2 class="text-center mb-4 fw-bold"><i class="bi bi-list"></i> Lista de Perfis</h2>
-
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <% @profiles.each do |profile| %>
-      <div class="col">
-        <div class="card bg-dark text-white p-3 shadow-lg rounded-4 text-center" style="height: 350px">
-          
-          <% if profile.avatar_url.present? %>
-            <img src="<%= profile.avatar_url %>" alt="<%= profile.nickname %>" class="rounded-circle mx-auto d-block" width="100">
-          <% end %>
-
-          <div class="card-body">
-            <h5 class="fw-bold"><%= profile.name %></h5>
-            <p class="text-secondary">@<%= profile.nickname %></p>
-
-            <p style="height: 50px">
-              <i class="bi bi-link"></i> 
-              <a href="<%= profile.github_url %>" target="_blank" class="text-white text-decoration-none">
-                <%= profile.github_url %>
-              </a>
-            </p>
-
-            <div class="d-flex justify-content-center gap-2">
-              <a href="<%= profile_path(profile) %>" class="btn btn-outline-light btn-sm">
-                <i class="bi bi-eye"></i> Ver
-              </a>
-              <a href="<%= edit_profile_path(profile) %>" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-pencil"></i> Editar
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
+  <div class="mb-4">
+    <input type="text" class="form-control" 
+           placeholder="Buscar por nome, usuário, organização, localização..."
+           data-search-target="input" 
+           data-action="input->search#perform"
+           data-search-url="<%= profiles_path %>">
+  </div>
+  <div data-search-target="list">
+    <%= render partial: "profiles/list", locals: { profiles: @profiles } %>
   </div>
 </div>

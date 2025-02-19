@@ -1,5 +1,15 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-rm -f /app/tmp/pids/server.pid
-bin/setup --skip-server
+if ! command -v node > /dev/null; then
+  echo "Instalando Node.js e npm..."
+  apt-get update -qq && apt-get install -y nodejs npm
+fi
+
+npm install
+
+bundle install
+
+rm -f tmp/pids/server.pid
+
 exec "$@"

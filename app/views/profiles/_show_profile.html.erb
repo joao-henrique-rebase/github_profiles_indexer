@@ -1,0 +1,21 @@
+<% if profile.avatar_url.present? %>
+  <img src="<%= profile.avatar_url %>" alt="<%= profile.nickname %>" class="rounded-circle mx-auto d-block" width="150">
+<% end %>
+
+<div class="card-body">
+  <h2 class="fw-bold mt-3"><%= profile.name %></h2>
+  <p class="text-secondary">@<%= profile.nickname %></p>
+
+  <p><i class="bi bi-person"></i> <strong>Seguidores:</strong> <%= profile.followers_count %></p>
+  <p><i class="bi bi-person-check"></i> <strong>Seguindo:</strong> <%= profile.following_count %></p>
+  <p><i class="bi bi-star-fill"></i> <strong>Stars:</strong> <%= profile.stars_count %></p>
+  <p><i class="bi bi-graph-up"></i> <strong>Contribuições no último ano:</strong> <%= profile.contributions_count_last_year %></p>
+
+  <% if profile.organization.present? %>
+    <p><i class="bi bi-building"></i> <strong>Organização:</strong> <%= profile.organization %></p>
+  <% end %>
+
+  <% if profile.location.present? %>
+    <p><i class="bi bi-geo-alt"></i> <strong>Localização:</strong> <%= profile.location %></p>
+  <% end %>
+</div>
