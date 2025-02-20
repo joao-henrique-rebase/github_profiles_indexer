@@ -1,33 +1,40 @@
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-  <% profiles.each do |profile| %>
-    <div class="col">
-      <div class="card bg-dark text-white p-3 shadow-lg rounded-4 text-center" style="height: 350px">
-        
-        <% if profile.avatar_url.present? %>
-          <img src="<%= profile.avatar_url %>" alt="<%= profile.nickname %>" class="rounded-circle mx-auto d-block" width="100">
-        <% end %>
+<% if profiles.any? %>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% profiles.each do |profile| %>
+      <div class="col">
+        <div class="card bg-dark text-white p-3 shadow-lg rounded-4 text-center" style="height: 350px">
+          
+          <% if profile.avatar_url.present? %>
+            <img src="<%= profile.avatar_url %>" alt="<%= profile.nickname %>" class="rounded-circle mx-auto d-block" width="100">
+          <% end %>
 
-        <div class="card-body">
-          <h5 class="fw-bold"><%= profile.name %></h5>
-          <p class="text-secondary">@<%= profile.nickname %></p>
+          <div class="card-body">
+            <h5 class="fw-bold"><%= profile.name %></h5>
+            <p class="text-secondary">@<%= profile.nickname %></p>
 
-          <p style="height: 50px">
-            <i class="bi bi-link"></i> 
-            <a href="<%= shortened_url(profile.short_code) %>" target="_blank" class="text-white text-decoration-none">
-              <%= "/#{profile.short_code}" %>
-            </a>
-          </p>
+            <p style="height: 50px">
+              <i class="bi bi-link"></i> 
+              <a href="<%= shortened_url(profile.short_code) %>" target="_blank" class="text-white text-decoration-none">
+                <%= "/#{profile.short_code}" %>
+              </a>
+            </p>
 
-          <div class="d-flex justify-content-center gap-2">
-            <a href="<%= profile_path(profile) %>" class="btn btn-outline-light btn-sm">
-              <i class="bi bi-eye"></i> Ver
-            </a>
-            <a href="<%= edit_profile_path(profile) %>" class="btn btn-outline-secondary btn-sm">
-              <i class="bi bi-pencil"></i> Editar
-            </a>
+            <div class="d-flex justify-content-center gap-2">
+              <a href="<%= profile_path(profile) %>" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-eye"></i> View
+              </a>
+              <a href="<%= edit_profile_path(profile) %>" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-pencil"></i> Edit
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="col-12 text-center mt-5">
+    <i class="bi bi-exclamation-triangle fs-1 text-warning"></i>
+    <p class="text-muted mt-3 fs-4">Nenhum perfil encontrado.</p>
+  </div>
+<% end %>

@@ -1,0 +1,25 @@
+one:
+  name: João Henrique
+  nickname: joao-henrique-rebase
+  followers_count: "200"
+  following_count: "150"
+  stars_count: "50"
+  contributions_count_last_year: 600
+  avatar_url: "https://github.com/avatar/joao-henrique-rebase.png"
+  github_url: "https://github.com/joao-henrique-rebase"
+  short_code: "abc123"
+  organization: "Fretadao"
+  location: "Sao Paulo, Brazil"
+
+two:
+  name: David Heinemeier Hansson
+  nickname: dhh
+  followers_count: "20700"
+  following_count: "0"
+  stars_count: "17"
+  contributions_count_last_year: 1500
+  avatar_url: "https://github.com/avatar/dhh.png"
+  github_url: "https://github.com/dhh"
+  short_code: "def456"
+  organization: "37signals"
+  location: "Rio de Janeiro, Brazil"
