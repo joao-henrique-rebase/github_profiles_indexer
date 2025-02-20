@@ -18,4 +18,11 @@
   <% if profile.location.present? %>
     <p><i class="bi bi-geo-alt"></i> <strong>Localização:</strong> <%= profile.location %></p>
   <% end %>
+
+  <p>
+    <i class="bi bi-link"></i> 
+    <a href="<%= shortened_url(profile.short_code) %>" target="_blank" class="text-white text-decoration-none">
+      <%= "/#{profile.short_code}" %>
+    </a>
+  </p>
 </div>

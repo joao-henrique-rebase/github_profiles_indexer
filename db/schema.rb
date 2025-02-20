@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_17_190006) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_032608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,5 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_17_190006) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "short_code"
+    t.index ["short_code"], name: "index_profiles_on_short_code", unique: true
   end
 end

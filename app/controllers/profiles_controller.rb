@@ -32,6 +32,7 @@ class ProfilesController < ApplicationController
         redirect_to new_profile_path, alert: result[:message]
       end
     else
+      flash.now[:alert] = @profile.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
     end
   end
@@ -49,6 +50,7 @@ class ProfilesController < ApplicationController
         redirect_to edit_profile_path(@profile), alert: result[:message]
       end
     else
+      flash.now[:alert] = @profile.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_entity
     end
   end
@@ -71,6 +73,16 @@ class ProfilesController < ApplicationController
       render json: { status: "success", message: result[:message] }
     else
       render json: { status: "error", message: result[:message] }, status: :unprocessable_entity
+    end
+  end
+
+  def redirect
+    profile = Profile.find_by(short_code: params[:short_code])
+
+    if profile
+      redirect_to profile.github_url, allow_other_host: true
+    else
+      redirect_to root_path, alert: "Perfil não encontrado."
     end
   end
 

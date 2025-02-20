@@ -13,8 +13,8 @@
 
           <p style="height: 50px">
             <i class="bi bi-link"></i> 
-            <a href="<%= profile.github_url %>" target="_blank" class="text-white text-decoration-none">
-              <%= profile.github_url %>
+            <a href="<%= shortened_url(profile.short_code) %>" target="_blank" class="text-white text-decoration-none">
+              <%= "/#{profile.short_code}" %>
             </a>
           </p>
 
