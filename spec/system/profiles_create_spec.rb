@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "Create profile", type: :feature do
-  let(:profile_url) { "https://github.com/dev-super-hero" }
-  let(:contributions_url) { "https://github.com/users/dev-super-hero/contributions" }
+RSpec.describe 'Create profile', type: :feature do
+  let(:profile_url) { 'https://github.com/dev-super-hero' }
+  let(:contributions_url) { 'https://github.com/users/dev-super-hero/contributions' }
 
   let(:profile_html) do
     <<-HTML
@@ -26,29 +26,30 @@ RSpec.describe "Create profile", type: :feature do
 
   before do
     stub_request(:get, profile_url).to_return(status: 200, body: profile_html)
-    stub_request(:get, contributions_url).to_return(status: 200, body: contributions_html)
+    stub_request(:get, contributions_url).to_return(status: 200,
+                                                    body: contributions_html)
   end
 
-  context "when creating a profile with valid data" do
-    it "successfully creates the profile" do
+  context 'when creating a profile with valid data' do
+    it 'successfully creates the profile' do
       visit new_profile_path
 
-      fill_in "Nome", with: "Developer SuperHero"
-      fill_in "URL perfil do GitHub", with: "https://github.com/dev-super-hero"
+      fill_in 'Nome', with: 'Developer SuperHero'
+      fill_in 'URL perfil do GitHub', with: 'https://github.com/dev-super-hero'
 
-      click_button "Salvar Perfil"
+      click_button 'Salvar Perfil'
 
-      expect(page).to have_content("Perfil criado com sucesso.")
-      expect(page).to have_content("Developer SuperHero")
-      expect(page).to have_content("dev-super-hero")
+      expect(page).to have_content('Perfil criado com sucesso.')
+      expect(page).to have_content('Developer SuperHero')
+      expect(page).to have_content('dev-super-hero')
     end
   end
 
-  context "when creating a profile with invalid data" do
-    it "shows validation errors" do
+  context 'when creating a profile with invalid data' do
+    it 'shows validation errors' do
       visit new_profile_path
 
-      click_button "Salvar Perfil"
+      click_button 'Salvar Perfil'
 
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Github url can't be blank")

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "Update profile", type: :system do
+RSpec.describe 'Update profile', type: :system do
   fixtures :profiles
 
   let(:profile) { profiles(:one) }
-  let(:profile_url) { "https://github.com/dev-super-hero" }
-  let(:contributions_url) { "https://github.com/users/dev-super-hero/contributions" }
+  let(:profile_url) { 'https://github.com/dev-super-hero' }
+  let(:contributions_url) { 'https://github.com/users/dev-super-hero/contributions' }
 
   let(:profile_html) do
     <<-HTML
@@ -29,30 +29,31 @@ RSpec.describe "Update profile", type: :system do
 
   before do
     stub_request(:get, profile_url).to_return(status: 200, body: profile_html)
-    stub_request(:get, contributions_url).to_return(status: 200, body: contributions_html)
+    stub_request(:get, contributions_url).to_return(status: 200,
+                                                    body: contributions_html)
   end
 
-  context "when updating a profile with valid data" do
-    it "successfully updates the profile" do
+  context 'when updating a profile with valid data' do
+    it 'successfully updates the profile' do
       visit edit_profile_path(profile)
 
-      fill_in "Nome", with: "Developer SuperHero"
-      fill_in "URL perfil do GitHub", with: "https://github.com/dev-super-hero"
+      fill_in 'Nome', with: 'Developer SuperHero'
+      fill_in 'URL perfil do GitHub', with: 'https://github.com/dev-super-hero'
 
-      click_button "Salvar Perfil"
+      click_button 'Salvar Perfil'
 
-      expect(page).to have_content("Perfil atualizado com sucesso.")
-      expect(page).to have_content("Developer SuperHero")
-      expect(page).to have_content("dev-super-hero")
+      expect(page).to have_content('Perfil atualizado com sucesso.')
+      expect(page).to have_content('Developer SuperHero')
+      expect(page).to have_content('dev-super-hero')
     end
   end
 
-  context "when updating a profile with invalid data" do
-    it "shows validation errors" do
+  context 'when updating a profile with invalid data' do
+    it 'shows validation errors' do
       visit edit_profile_path(profile)
 
-      fill_in "Nome", with: ""
-      click_button "Salvar Perfil"
+      fill_in 'Nome', with: ''
+      click_button 'Salvar Perfil'
 
       expect(page).to have_content("Name can't be blank")
     end

@@ -32,8 +32,7 @@ O sistema realiza scraping das informações do GitHub, exibe os perfis cadastra
 ## **Pré-requisitos**
 
 - Docker
-- Docker
-  
+- Docker-Compose
 ---
 
 ## **Setup com Docker**
@@ -57,9 +56,8 @@ docker compose run --rm app bundle exec rspec
 ### 3. **Acessar o Shell do Container**
 Para acessar o shell do container Rails:
 ```sh
-docker compose run --rm app bash
+docker compose run --rm --service-ports app bash
 ```
-
 ---
 
 ## **Endpoints**
@@ -76,7 +74,6 @@ docker compose run --rm app bash
 | DELETE | `/profiles/:id`        | Remover um perfil.                           |
 | POST   | `/profiles/:id/rescan` | Re-escanear as informações do perfil.        |
 | GET    | `/:short_code`         | Redireciona para a URL original do perfil.   |
-
 ---
 
 ## **Descrição das Funcionalidades**
@@ -112,19 +109,17 @@ docker compose run --rm app bash
   - Campo de busca na página inicial filtra perfis por nome, nickname, organização ou localização.
   - Resultados são atualizados sem recarregar a página.
 - A página de perfil exibe todos os dados do perfil e possui botões para re-escanear, editar e remover.
-
 ---
 
 ## **Testes Automatizados**
-
-Os testes foram implementados utilizando **RSpec** e **Capybara** para garantir a qualidade da aplicação.
-
+- Os testes foram implementados utilizando **RSpec** e **Capybara** para garantir a qualidade da aplicação.
+---
 
 ## **Melhorias Futuras**
 - Implementar paginação na listagem de perfis.
 - Melhorar o design da interface com mais elementos visuais.
 - Adicionar suporte a múltiplas línguas (i18n).
-
+- Adicionar rubocop ao projeto.
 ---
 
 ## **Limitações Conhecidas**
@@ -135,8 +130,8 @@ Os testes foram implementados utilizando **RSpec** e **Capybara** para garantir 
 ## **Autor**
 Desenvolvido por **João Henrique**.  
 [GitHub](https://github.com/joao-henrique-rebase) | [LinkedIn](https://www.linkedin.com/in/joao-henrique-magalhaes-do-vale/)
-
 ---
 
 ## Preview
 ![GitHub Profiles Indexer](./preview.gif)
+---
