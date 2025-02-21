@@ -132,6 +132,9 @@ Desenvolvido por **João Henrique**.
 [GitHub](https://github.com/joao-henrique-rebase) | [LinkedIn](https://www.linkedin.com/in/joao-henrique-magalhaes-do-vale/)
 ---
 
+## **Deploy**
+- https://profiles-indexer.fly.dev
+
 ## Preview
 ![GitHub Profiles Indexer](./preview.gif)
 ---
